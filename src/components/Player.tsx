@@ -4,7 +4,8 @@ import {
   PauseIcon,
   PlayIcon,
 } from '@heroicons/react/24/solid'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import useStore from '../store'
 import { musicProps } from '../types/music'
 
 type PlayerProps = {
@@ -34,10 +35,14 @@ function Player({
     duration: 0,
   })
 
+  const setAudioRef = useStore(state => state.setAudioRef)
+
   // Ref
   const audioRef = useRef<HTMLAudioElement>(null)
-  const progressBarRef = useRef<HTMLInputElement>(null)
 
+  useEffect(()=> {
+     setAudioRef(audioRef)
+  },[])
   // event handlelr
 
   const playSongHandler = () => {
@@ -73,8 +78,6 @@ function Player({
           min="0"
           max={songInfo?.duration}
           value={songInfo?.currentTime}
-          // ref={progressBarRef}
-
           onChange={handleProgressChange}
         />
         <p className="p-3">{formatTime(songInfo.duration)}</p>

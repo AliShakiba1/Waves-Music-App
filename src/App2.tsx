@@ -1,24 +1,31 @@
 import { useState } from 'react'
+import Credite from './components/Credite'
+import Library from './components/Library'
+import Nav from './components/Nav'
 import Player from './components/Player'
 import Song from './components/Song'
 import useStore from './store'
-import Credite from './components/Credite'
 
 function App2() {
-  const songs = useStore(state => state.Musics)
+  const [songs, isPlaying, setisPlaying] = useStore(state => [
+    state.Musics,
+    state.isPlaying,
+    state.setIsplaying,
+  ])
   const [currentSong, setCurrentSong] = useState(songs[0])
-  const [isPlaying, setisPlaying] = useState(false)
 
   return (
-    <div className="h-screen w-full bg-[#bdc3c73f]">
-      <div className="container mx-auto  text-xl  font-bold">
+    <div className="min-h-screen w-full overflow-x-hidden bg-[#bdc3c73f]">
+      <div className=" container mx-auto overflow-x-hidden text-xl font-bold">
+        <Nav />
         <Song currentSong={currentSong} />
         <Player
           isPlaying={isPlaying}
           setisPlaying={setisPlaying}
           currentSong={currentSong}
         />
-        <Credite/>
+        <Library setCurrentSong={setCurrentSong} />
+        <Credite />
       </div>
     </div>
   )
