@@ -2,6 +2,7 @@ import { useState } from 'react'
 import Player from './components/Player'
 import Song from './components/Song'
 import useStore from './store'
+import Credite from './components/Credite'
 
 function App2() {
   const songs = useStore(state => state.Musics)
@@ -17,6 +18,7 @@ function App2() {
           setisPlaying={setisPlaying}
           currentSong={currentSong}
         />
+        <Credite/>
       </div>
     </div>
   )
