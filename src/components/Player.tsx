@@ -36,7 +36,7 @@ function Player({
   const [songInfo, setsongInfo] = useState({
     currentTime: 0,
     duration: 0,
-  })
+      })
 
   const [Musics, setAudioRef, setFalseAll] = useStore(state => [
     state.Musics,
@@ -78,12 +78,12 @@ function Player({
   const timeUpdateHandler = (e: any) => {
     const current = e.target.currentTime
     const duration = e.target.duration
-
+    
     setsongInfo({ currentTime: current, duration: duration })
-  }
+      }
 
   const handleProgressChange = (e: any) => {
-    audioRef.current!.currentTime = e.target.value
+        audioRef.current!.currentTime = e.target.value
 
     setsongInfo({ ...songInfo, currentTime: e.target.value })
   }
@@ -94,7 +94,7 @@ function Player({
     if (dir == 'skipBack') {
       if ((currentIndex - 1) % Musics.length === -1) {
         setCurrentSong(Musics[Musics.length - 1])
-         usePlayPromist(isPlaying, audioRef)
+        usePlayPromist(isPlaying, audioRef)
         return
       }
       setCurrentSong(Musics[(currentIndex - 1) % Musics.length])
@@ -104,22 +104,22 @@ function Player({
     }
 
     usePlayPromist(isPlaying, audioRef)
-   
-  }
+  
+    }
 
   return (
     <div className="flex h-40 flex-col items-center justify-between">
       <div className=" flex w-full justify-center ">
         <p className="p-3">{formatTime(songInfo.currentTime)}</p>
-        <input
-          className="m-3 w-4/6 md:w-3/6 "
-          type="range"
-          min="0"
-          max={songInfo?.duration}
-          value={songInfo?.currentTime}
-          onChange={handleProgressChange}
-        />
-        <p className="p-3">{formatTime(songInfo.duration)}</p>
+                  <input
+            className="m-3 w-4/6 md:w-3/6 "
+            type="range"
+            min="0"
+            max={songInfo?.duration}
+            value={songInfo?.currentTime}
+            onChange={handleProgressChange}
+          />
+                  <p className="p-3">{formatTime(songInfo.duration)}</p>
       </div>
       <div className=" flex w-4/6 justify-between sm:w-2/6">
         <ChevronLeftIcon
