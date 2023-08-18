@@ -10,8 +10,8 @@ const LibrarySong = ({ currentSong, setCurrentSong }: musicProps & any) => {
     state.setFalseAll,
   ])
 
-  const songSelectHandler = () => {
-    setCurrentSong(currentSong)
+  const songSelectHandler = async () => {
+    await setCurrentSong(currentSong)
     const changeFalseTrue = songs.map(song => {
       if (song.id === currentSong.id) {
         return { ...song, active: true }
@@ -22,7 +22,9 @@ const LibrarySong = ({ currentSong, setCurrentSong }: musicProps & any) => {
 
     setFalseAll(changeFalseTrue)
 
-    usePlayPromist(isPlaying, audioRef)
+    // usePlayPromist(isPlaying, audioRef)
+
+    if (isPlaying) audioRef.current?.play()
   }
   return (
     <li
