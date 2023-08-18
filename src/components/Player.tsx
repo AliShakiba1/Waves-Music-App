@@ -7,10 +7,12 @@ import {
 import { useEffect, useRef, useState } from 'react'
 import useStore from '../store'
 import { musicProps } from '../types/music'
+import usePlayPromist from '../custom Hook/usePlayPromise'
 
 type PlayerProps = {
   setisPlaying: any
   isPlaying: boolean
+  setCurrentSong: any
 }
 
 const formatTime = (time: any) => {
@@ -28,6 +30,7 @@ function Player({
   currentSong,
   setisPlaying,
   isPlaying,
+  setCurrentSong,
 }: musicProps & PlayerProps) {
   // State
   const [songInfo, setsongInfo] = useState({
@@ -35,14 +38,31 @@ function Player({
     duration: 0,
   })
 
-  const setAudioRef = useStore(state => state.setAudioRef)
+  const [Musics, setAudioRef, setFalseAll] = useStore(state => [
+    state.Musics,
+    state.setAudioRef,
+    state.setFalseAll,
+  ])
 
   // Ref
   const audioRef = useRef<HTMLAudioElement>(null)
 
-  useEffect(()=> {
-     setAudioRef(audioRef)
-  },[])
+  useEffect(() => {
+    setAudioRef(audioRef)
+  }, [])
+
+  // use effect
+  useEffect(() => {
+    const changeFalseTrue = Musics.map(song => {
+      if (song.id === currentSong.id) {
+        return { ...song, active: true }
+      } else {
+        return { ...song, active: false }
+      }
+    })
+
+    setFalseAll(changeFalseTrue)
+  }, [currentSong])
   // event handlelr
 
   const playSongHandler = () => {
@@ -68,6 +88,25 @@ function Player({
     setsongInfo({ ...songInfo, currentTime: e.target.value })
   }
 
+  const skipTrackHandler = (dir: string) => {
+    let currentIndex = Musics.findIndex(song => song.id === currentSong.id)
+
+    if (dir == 'skipBack') {
+      if ((currentIndex - 1) % Musics.length === -1) {
+        setCurrentSong(Musics[Musics.length - 1])
+         usePlayPromist(isPlaying, audioRef)
+        return
+      }
+      setCurrentSong(Musics[(currentIndex - 1) % Musics.length])
+    }
+    if (dir == 'skipForward') {
+      setCurrentSong(Musics[(currentIndex + 1) % Musics.length])
+    }
+
+    usePlayPromist(isPlaying, audioRef)
+   
+  }
+
   return (
     <div className="flex h-40 flex-col items-center justify-between">
       <div className=" flex w-full justify-center ">
@@ -83,13 +122,19 @@ function Player({
         <p className="p-3">{formatTime(songInfo.duration)}</p>
       </div>
       <div className=" flex w-4/6 justify-between sm:w-2/6">
-        <ChevronLeftIcon className="svg" />
+        <ChevronLeftIcon
+          onClick={() => skipTrackHandler('skipBack')}
+          className="svg"
+        />
         {isPlaying ? (
           <PauseIcon onClick={playSongHandler} className=" svg " />
         ) : (
           <PlayIcon onClick={playSongHandler} className=" svg " />
         )}
-        <ChevronRightIcon className=" svg " />
+        <ChevronRightIcon
+          onClick={() => skipTrackHandler('skipForward')}
+          className=" svg "
+        />
       </div>
       <audio
         src={currentSong?.audio}

@@ -2,8 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-.svg {
-  @apply h-9 w-9 cursor-pointer text-black;
+svg {
+  @apply h-9 w-9 cursor-pointer text-black  ;
 }
 
 * {

@@ -23,6 +23,7 @@ function App2() {
           isPlaying={isPlaying}
           setisPlaying={setisPlaying}
           currentSong={currentSong}
+          setCurrentSong={setCurrentSong}
         />
         <Library setCurrentSong={setCurrentSong} />
         <Credite />

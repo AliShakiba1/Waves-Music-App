@@ -1,16 +1,14 @@
+import usePlayPromist from '../custom Hook/usePlayPromise'
 import useStore from '../store'
 import { musicProps } from '../types/music'
 
 const LibrarySong = ({ currentSong, setCurrentSong }: musicProps & any) => {
-  const [songs, isPlaying, setIsplaying, audioRef, setFalseAll] = useStore(
-    state => [
-      state.Musics,
-      state.isPlaying,
-      state.setIsplaying,
-      state.audioRef,
-      state.setFalseAll,
-    ],
-  )
+  const [songs, isPlaying, audioRef, setFalseAll] = useStore(state => [
+    state.Musics,
+    state.isPlaying,
+    state.audioRef,
+    state.setFalseAll,
+  ])
 
   const songSelectHandler = () => {
     setCurrentSong(currentSong)
@@ -24,12 +22,7 @@ const LibrarySong = ({ currentSong, setCurrentSong }: musicProps & any) => {
 
     setFalseAll(changeFalseTrue)
 
-    if (isPlaying) {
-      const playPromis = audioRef.current?.play()
-      if (playPromis !== undefined) {
-        playPromis.then(() => audioRef.current?.play())
-      }
-    }
+    usePlayPromist(isPlaying, audioRef)
   }
   return (
     <li
