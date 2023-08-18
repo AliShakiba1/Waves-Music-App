@@ -62,6 +62,7 @@ function Player({
     })
 
     setFalseAll(changeFalseTrue)
+    console.log(`first`)
   }, [currentSong])
   // event handlelr
 

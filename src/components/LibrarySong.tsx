@@ -28,7 +28,7 @@ const LibrarySong = ({ currentSong, setCurrentSong }: musicProps & any) => {
   }
   return (
     <li
-      className={`flex  cursor-pointer self-center pb-4 pl-10  hover:bg-blue-200 ${
+      className={`flex transition-all duration-300 ease-in-out cursor-pointer self-center pb-4 pl-10  hover:bg-blue-200 ${
         currentSong.active ? 'bg-blue-100' : ''
       } `}
       onClick={songSelectHandler}

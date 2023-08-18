@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 svg {
-  @apply h-9 w-9 cursor-pointer text-black;
+  @apply h-9 w-9 cursor-pointer text-black ;
 }
 
 * {
@@ -22,4 +22,8 @@ svg {
   background-color: rgba(155, 155, 155, 0.5);
   border-radius: 20px;
   border: transparent;
+}
+
+.librarActive {
+  margin-left: 20%;
 }
